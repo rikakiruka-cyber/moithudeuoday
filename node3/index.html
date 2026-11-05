@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LSB // nhìn vào kênh xanh dương</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0b0b;color:#cfcabb;font:14px/1.7 "Courier New",monospace}
+main{width:min(640px,92vw);padding:24px 0}canvas{width:100%;image-rendering:pixelated;border:1px solid #333;display:block}
+.b{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+label{color:#777;display:flex;align-items:center;gap:6px}button{background:none;border:1px solid #555;color:#cfcabb;font:inherit;padding:6px 12px;cursor:pointer}button:hover{border-color:#c9a24b;color:#fff}
+input{width:100%;background:none;border:0;border-bottom:1px solid #777;color:#fff;font:inherit;padding:8px 0;outline:0}input:focus{border-color:#c9a24b}
+#m{color:#c9a24b;min-height:24px;margin-top:8px}small{color:#777}
+</style></head><body><main>
+<p>Một bức ảnh nhiễu. Có thứ gì đó nằm bên trong nó.</p>
+<canvas id="c" width="320" height="80"></canvas>
+<div class="b"><button data-c="-1">Gốc</button><button data-c="0">R</button><button data-c="1">G</button><button data-c="2">B</button><label>bit <input id="k" type="range" min="0" max="7" value="7" style="width:120px;border:0"> <span id="kv">7</span></label></div>
+<p><small>Địa chỉ cửa tiếp theo = từ thật (chữ thường) + 3301</small></p>
+<input id="i" placeholder="nhập địa chỉ" autocomplete="off">
+<div id="m"></div>
+</main>
+<script>
+const W=320,H=80,c=document.getElementById('c'),x=c.getContext('2d');
+function mk(s){const t=document.createElement('canvas');t.width=W;t.height=H;const u=t.getContext('2d');u.font='bold 64px monospace';u.textAlign='center';u.textBaseline='middle';u.fillText(atob(s),W/2,H/2+4);const a=u.getImageData(0,0,W,H).data,r=new Uint8Array(W*H);for(let i=0;i<r.length;i++)r[i]=a[i*4+3]>128?1:0;return r}
+const M=[mk('Tk9QRQ=='),mk('TE9TVA=='),mk('UlVORQ==')],p=new Uint8ClampedArray(W*H*4);
+for(let i=0;i<W*H;i++){for(let h=0;h<3;h++)p[i*4+h]=(Math.random()*128|0)*2+M[h][i];p[i*4+3]=255}
+let ch=-1,k=7;const kk=document.getElementById('k'),kv=document.getElementById('kv');
+function show(){const e=x.createImageData(W,H);for(let i=0;i<p.length;i+=4){let r=p[i],g=p[i+1],b=p[i+2];
+if(ch>=0)r=g=b=((p[i+ch]>>k)&1)*255;e.data[i]=r;e.data[i+1]=g;e.data[i+2]=b;e.data[i+3]=255}x.putImageData(e,0,0)}
+show();document.querySelectorAll('button').forEach(b=>b.onclick=()=>{ch=+b.dataset.c;show()});
+kk.oninput=()=>{k=+kk.value;kv.textContent=k;show()};
+const i=document.getElementById('i'),m=document.getElementById('m');
+async function op(a,b){try{const k=await crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',new TextEncoder().encode(a)),'AES-GCM',false,['decrypt']);const u=Uint8Array.from(atob(b),c=>c.charCodeAt(0));return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u.slice(0,12)},k,u.slice(12)))}catch(e){return null}}
+i.addEventListener('keydown',async e=>{if(e.key!=='Enter')return;
+if(!window.crypto||!crypto.subtle){m.textContent='Hãy mở trang bằng liên kết https.';return}
+const v=i.value.trim().toLowerCase();const r=await op(v,'iUXiIf9slylaAKA+K472JN8lBghQSVFLo44AFWAqZsE8Jw9ZV25TKA==');
+if(r){m.textContent='Đúng.';setTimeout(()=>location.href=r,800)}else{m.textContent='Sai.'}});
+</script></body></html>

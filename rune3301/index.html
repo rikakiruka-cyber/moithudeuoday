@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ᚪᛗᚩᚱ</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0b0b;color:#cfcabb;font:14px/1.7 "Courier New",monospace}
+main{width:min(640px,92vw);padding:24px 0}.r{font-size:clamp(34px,9vw,56px);letter-spacing:.12em;text-align:center;color:#fff;padding:22px 0;border-top:1px solid #333;border-bottom:1px solid #333;margin:18px 0}
+#t{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;margin:16px 0}#t div{border:1px solid #333;padding:4px 8px;display:flex;justify-content:space-between}#t span{color:#c9a24b}
+input{width:100%;background:none;border:0;border-bottom:1px solid #777;color:#fff;font:inherit;padding:8px 0;outline:0}input:focus{border-color:#c9a24b}
+#m{color:#c9a24b;min-height:24px;margin-top:8px}
+</style></head><body><main>
+<p>Cổ ngữ. Ba từ. Tiếng Việt, không dấu.</p>
+<div class="r">ᛖᛗ ᚣᛖᚢ ᚪᚾᚻ</div>
+<div id="t"></div>
+<input id="i" placeholder="nhập cụm từ đã giải mã" autocomplete="off">
+<div id="m"></div>
+</main>
+<script>
+const T="ᚠF ᚢU ᚦTH ᚩO ᚱR ᚳC ᚷG ᚹW ᚻH ᚾN ᛁI ᛄJ ᛇEO ᛈP ᛉX ᛋS ᛏT ᛒB ᛖE ᛗM ᛚL ᛝNG ᛟOE ᛞD ᚪA ᚫAE ᚣY ᛡIA ᛠEA".split(' ');
+document.getElementById('t').innerHTML=T.map(s=>`<div><span>${s[0]}</span>${s.slice(1)}</div>`).join('');
+const i=document.getElementById('i'),m=document.getElementById('m');
+async function op(a,b){try{const k=await crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',new TextEncoder().encode(a)),'AES-GCM',false,['decrypt']);const u=Uint8Array.from(atob(b),c=>c.charCodeAt(0));return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u.slice(0,12)},k,u.slice(12)))}catch(e){return null}}
+i.addEventListener('keydown',async e=>{if(e.key!=='Enter')return;
+if(!window.crypto||!crypto.subtle){m.textContent='Hãy mở trang bằng liên kết https.';return}
+const v=i.value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();const r=await op(v,'oOZ705BClmob2J2IZHTRtSEASRF/HeKWkV3gLTM9FtdDjDWpU4EV');
+if(r){m.textContent='Cánh cửa cuối đang mở.';setTimeout(()=>location.href=r,800)}else{m.textContent='Sai.'}});
+</script></body></html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3301</title>
+<!-- Dịch ngược, không phải dịch xuôi. -->
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0b0b;color:#cfcabb;font:15px/1.7 "Courier New",monospace}
+main{width:min(560px,90vw)}h1{font-size:64px;letter-spacing:.3em;margin:0 0 8px;font-weight:400}
+.c{font-size:30px;letter-spacing:.35em;padding:22px 0;border-top:1px solid #333;border-bottom:1px solid #333;margin:22px 0;text-align:center;color:#fff}
+input{width:100%;background:none;border:0;border-bottom:1px solid #777;color:#fff;font:inherit;padding:8px 0;outline:0}input:focus{border-color:#c9a24b}
+#m{min-height:24px;color:#c9a24b;margin-top:10px}.s{animation:s .3s}@keyframes s{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+small{color:#666}
+</style></head><body><main>
+<h1>3301</h1>
+<p>Chúng tôi tìm những tâm trí sáng suốt.<br>Không có gì ở đây là ngẫu nhiên.</p>
+<div class="c">krdqjkrq</div>
+<p><small>Tam giác đều có bao nhiêu cạnh? Hãy lùi lại.</small></p>
+<input id="i" placeholder="nhập câu trả lời" autocomplete="off" autofocus>
+<div id="m"></div>
+</main>
+<script>
+const i=document.getElementById('i'),m=document.getElementById('m');
+async function op(a,b){try{const k=await crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',new TextEncoder().encode(a)),'AES-GCM',false,['decrypt']);const u=Uint8Array.from(atob(b),c=>c.charCodeAt(0));return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u.slice(0,12)},k,u.slice(12)))}catch(e){return null}}
+i.addEventListener('keydown',async e=>{if(e.key!=='Enter')return;
+if(!window.crypto||!crypto.subtle){m.textContent='Hãy mở trang bằng liên kết https.';return}
+const v=i.value.trim().toLowerCase();const r=await op(v,'2ZgcM7VSKAwy8NdW4aL3WvATs/sENZYa6NyetG+7h1ce79Fai2Gt');
+if(r){m.textContent='Cánh cửa mở.';setTimeout(()=>location.href=r,800)}else{m.textContent='Sai.';m.classList.remove('s');void m.offsetWidth;m.classList.add('s')}});
+</script></body></html>
