@@ -12,7 +12,7 @@ small{color:#666}
 </style></head><body><main>
 <h1>3301</h1>
 <p>Chúng tôi tìm những tâm trí sáng suốt.<br>Không có gì ở đây là ngẫu nhiên.</p>
-<div class="c">krdqjkrq</div>
+<div class="c">qrgh</div>
 <p><small>Tam giác đều có bao nhiêu cạnh? Hãy lùi lại.</small></p>
 <input id="i" placeholder="nhập câu trả lời" autocomplete="off" autofocus>
 <div id="m"></div>
@@ -22,6 +22,6 @@ const i=document.getElementById('i'),m=document.getElementById('m');
 async function op(a,b){try{const k=await crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',new TextEncoder().encode(a)),'AES-GCM',false,['decrypt']);const u=Uint8Array.from(atob(b),c=>c.charCodeAt(0));return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u.slice(0,12)},k,u.slice(12)))}catch(e){return null}}
 i.addEventListener('keydown',async e=>{if(e.key!=='Enter')return;
 if(!window.crypto||!crypto.subtle){m.textContent='Hãy mở trang bằng liên kết https.';return}
-const v=i.value.trim().toLowerCase();const r=await op(v,'2ZgcM7VSKAwy8NdW4aL3WvATs/sENZYa6NyetG+7h1ce79Fai2Gt');
+const v=i.value.trim().toLowerCase();const r=await op(v,'9nxnFfA6zkk+tfXiitoXTwyMsUZ0kFWtY+mr554iPyD4vjQ=');
 if(r){m.textContent='Cánh cửa mở.';setTimeout(()=>location.href=r,800)}else{m.textContent='Sai.';m.classList.remove('s');void m.offsetWidth;m.classList.add('s')}});
 </script></body></html>
